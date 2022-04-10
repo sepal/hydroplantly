@@ -1,3 +1,9 @@
+# Ignore VScode totally
+.vscode
+
+# Ignore settings files
+settings.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
