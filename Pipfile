@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 growhat = "*"
 pydantic = "*"
+"rpi.gpio" = "*"
+pillow = "*"
 
 [dev-packages]
 

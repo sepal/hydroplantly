@@ -6,7 +6,6 @@ from plant.pump import PumpControl
 
 
 class Watering:
-    __plant: Plant
     __settings: WateringSettings
 
     __pump: PumpControl
@@ -27,14 +26,10 @@ class Watering:
         if self.__moisture_sensor.active:
             self.__moisture_sensor.update()
 
-        if ts - self.__last_watered > self.__settings.water_interval:
+        if self.__settings.auto_water \
+            and ts - self.__last_watered > self.__settings.water_interval:
             self.__pump.water()
             self.__last_watered = ts
-        
-
-    @property
-    def getPlantName(self) -> str:
-        return self.__plant.name
 
     @property
     def getLastWatered(self) -> DateTime:
