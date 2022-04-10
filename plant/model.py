@@ -1,8 +1,8 @@
-from lib2to3.pytree import Base
+from datetime import timedelta
 from pydantic import BaseModel
 from datetime import timedelta
 
-class Pump(BaseModel):
+class PumpSettings(BaseModel):
     pump_speed: float
     pump_time: float
     pump_repeat: int
@@ -16,8 +16,9 @@ class MoistureSettings(BaseModel):
 
 class WateringSettings(BaseModel):
     pump_channel: int
-    pump_settings: Pump
+    pump_settings: PumpSettings
     moisture_setting: MoistureSettings
+    water_interval: timedelta
     water_level: float
     warn_level: float
     auto_water: False

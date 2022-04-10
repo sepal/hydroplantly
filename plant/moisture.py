@@ -26,19 +26,3 @@ class MoistureSensor:
         self.__saturation.append(self.__last_reading)
         self.__saturation = self.__saturation[-NUM_SAMPLES:]
         self.__avg_saturation = sum(self.__saturation) / float(NUM_SAMPLES)
-
-
-
-class MoistureMonitor:
-    __sensors = [MoistureSensor]
-
-    def __init__(self) -> None:
-        pass
-
-    def update(self):
-        for sensor in self.active_sensors:
-            sensor.update()
-
-    @property
-    def active_sensors(self) -> List[MoistureSensor]:
-        return list(filter(lambda setting: setting.active, self.__sensors))
