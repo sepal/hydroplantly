@@ -36,6 +36,7 @@ class App:
                 watering = Watering(plant)
                 self.__plants.append(plant)
                 self.__waterplan.append(watering)
+                
             active_settings = settings['general']['active_time']
             self.__active_time = TimeInterval.from_time(
                 active_settings['from'], active_settings['to'])
@@ -65,7 +66,11 @@ def app_updater(app: App) -> None:
 def main():
     global app_timer
     logging.basicConfig(format='%(asctime)s %(levelname)-2s %(message)s',
-                        level=logging.INFO)
+                        level=logging.INFO,
+                        handlers=[
+                            logging.FileHandler("hydroplantly.log"),
+                            logging.StreamHandler()
+                        ])
 
     logging.info("Starting app")
     app = App("settings.json")
