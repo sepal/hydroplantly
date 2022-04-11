@@ -33,7 +33,7 @@ class MoistureSensor:
         return self.__avg_saturation
 
     @property
-    def value(self) -> float:
+    def saturation(self) -> float:
         return self.__last_reading
 
     @property

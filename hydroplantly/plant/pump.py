@@ -7,11 +7,12 @@ import time
 class PumpControl:
     __pump: Pump
     __settings: PumpSettings
+    __channel: int
 
     def __init__(self, channel: int, settings: PumpSettings) -> None:
         self.__settings = settings
         self.__pump = Pump(channel)
-        self.__setSp
+        self.__channel = channel
 
     def water(self):
         for i in range(self.__settings.pump_repeat):
@@ -19,3 +20,7 @@ class PumpControl:
                 self.__settings.pump_time
             )
             time.sleep(self.__settings.pump_delay)
+
+    @property
+    def channel(self) -> int:
+        return self.__channel
