@@ -16,10 +16,11 @@ class Watering:
 
     def __init__(self, plant: Plant) -> None:
         self.__plant = plant
+        self.__settings = plant.watering_settings
 
-        self.__pump = PumpControl(WateringSettings.pump_channel)
+        self.__pump = PumpControl(self.__settings.pump_channel, self.__settings.pump_settings)
         self.__moisture_sensor = MoistureSensor(self.__plant.watering_settings.moisture_setting)
-        self.__last_watered = datetime.now()
+        self.__last_watered = datetime(1992, 1, 1)
 
     def update(self) -> None:
         ts = datetime.now()
@@ -31,9 +32,9 @@ class Watering:
 
         if self.__settings.auto_water \
             and ts - self.__last_watered > self.__settings.water_interval:
+            logging.info(f"Enabling pump on channel {self.__pump.channel}")
             self.__pump.water()
             self.__last_watered = ts
-            logging.info(f"Watered channel {self.__pump.channel}")
 
     @property
     def getLastWatered(self) -> DateTime:

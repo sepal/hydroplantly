@@ -1,4 +1,4 @@
-import imp
+import logging
 from grow.pump import Pump
 
 from plant.model import PumpSettings, WateringSettings
@@ -15,11 +15,12 @@ class PumpControl:
         self.__channel = channel
 
     def water(self):
-        for i in range(self.__settings.pump_repeat):
-            self.__pump.dose(self.__settings.pump_speed, 
-                self.__settings.pump_time
+        for i in range(self.__settings.repeat):
+            logging.info(f"Dose {i} on channel {self.channel}")
+            self.__pump.dose(self.__settings.speed, 
+                self.__settings.time
             )
-            time.sleep(self.__settings.pump_delay)
+            time.sleep(self.__settings.delay)
 
     @property
     def channel(self) -> int:
