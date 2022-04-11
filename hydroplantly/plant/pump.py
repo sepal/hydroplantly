@@ -4,6 +4,7 @@ from grow.pump import Pump
 from plant.model import PumpSettings, WateringSettings
 import time
 
+
 class PumpControl:
     __pump: Pump
     __settings: PumpSettings
@@ -17,9 +18,9 @@ class PumpControl:
     def water(self):
         for i in range(self.__settings.repeat):
             logging.info(f"Dose {i} on channel {self.channel}")
-            self.__pump.dose(self.__settings.speed, 
-                self.__settings.time
-            )
+            self.__pump.dose(self.__settings.speed,
+                             self.__settings.time
+                             )
             time.sleep(self.__settings.delay)
 
     @property

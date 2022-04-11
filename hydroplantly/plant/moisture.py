@@ -5,6 +5,7 @@ from plant.model import MoistureSettings
 
 NUM_SAMPLES = 10
 
+
 class MoistureSensor:
     __sensor: Moisture
     __settings: MoistureSettings
@@ -14,9 +15,10 @@ class MoistureSensor:
 
     def __init__(self, settings: MoistureSettings) -> None:
         self.__settings = settings
-        self.__sensor = Moisture(settings.channel, settings.wet_point, settings.dry_point)
+        self.__sensor = Moisture(
+            settings.channel, settings.wet_point, settings.dry_point)
         self.__saturation = [1.0 for _ in range(NUM_SAMPLES)]
-    
+
     @property
     def active(self) -> bool:
         return self.__settings.active
@@ -26,7 +28,6 @@ class MoistureSensor:
         self.__saturation.append(self.__last_reading)
         self.__saturation = self.__saturation[-NUM_SAMPLES:]
         self.__avg_saturation = sum(self.__saturation) / float(NUM_SAMPLES)
-
 
     @property
     def avgSaturation(self) -> float:

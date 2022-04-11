@@ -4,6 +4,7 @@ from unittest import TestCase
 
 from hydroplantly.time_interval import TimeInterval
 
+
 class TestTimeInterval(TestCase):
 
     def testToString(self):
@@ -18,7 +19,6 @@ class TestTimeInterval(TestCase):
         a = TimeInterval(0, 0, 8, 3)
         b = TimeInterval(0, 0, 8, 3)
         self.assertEqual(a, b)
-
 
     def testParseFromTime(self):
         t = TimeInterval.from_time("00:00", "08:05")
@@ -39,7 +39,6 @@ class TestTimeInterval(TestCase):
 
         dt = datetime.fromisoformat('2022-10-30 08:00')
         self.assertFalse(t.isInDatetime(dt))
-
 
         t = TimeInterval.from_time("17:00", "02:00")
         dt = datetime.fromisoformat('2022-10-31 23:00')
