@@ -13,12 +13,11 @@ class Watering:
     __last_watered: DateTime
 
 
-    def __init__(self, plant: Plant, settings: WateringSettings) -> None:
+    def __init__(self, plant: Plant) -> None:
         self.__plant = plant
-        self.__settings = settings
 
         self.__pump = PumpControl(WateringSettings.pump_channel)
-        self.__moisture_sensor = MoistureSensor(settings.moisture_setting)
+        self.__moisture_sensor = MoistureSensor(self.__plant.watering_settings.moisture_setting)
         self.__last_watered = datetime.now()
 
     def update(self) -> None:
@@ -34,3 +33,8 @@ class Watering:
     @property
     def getLastWatered(self) -> DateTime:
         return self.__last_watered
+
+    @property
+    def moistureSensor(self) -> MoistureSensor:
+        return self.__moisture_sensor
+        

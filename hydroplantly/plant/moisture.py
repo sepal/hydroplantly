@@ -26,3 +26,16 @@ class MoistureSensor:
         self.__saturation.append(self.__last_reading)
         self.__saturation = self.__saturation[-NUM_SAMPLES:]
         self.__avg_saturation = sum(self.__saturation) / float(NUM_SAMPLES)
+
+
+    @property
+    def avgSaturation(self) -> float:
+        return self.__avg_saturation
+
+    @property
+    def value(self) -> float:
+        return self.__last_reading
+
+    @property
+    def channel(self) -> int:
+        return self.__settings.channel
