@@ -2,7 +2,7 @@ from typing import List
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoMedium as UserFont
 from plant.watering import Watering
-from helpers import DISPLAY_WIDTH, \
+from helpers import COLOR_RED, DISPLAY_WIDTH, \
     DISPLAY_HEIGHT, \
     icon_left_chev_right, \
     icon_clock, \
@@ -15,7 +15,8 @@ from helpers import DISPLAY_WIDTH, \
     COLOR_BG_INACTIVE, \
     COLOR_TEXT_ACTIVE, \
     COLOR_TEXT_INACTIVE, \
-    COLOR_WHITE
+    COLOR_WHITE, \
+    COLOR_YELLOW 
 
 
 class View:
@@ -61,12 +62,20 @@ class View:
 
 class PlantOverview(View):
 
-    __current_tab = 1
     __waterplan = []
+    __current_watering: Watering
+    __current_channel: int
 
     def __init__(self, image: Image.Image, waterplan: List[Watering]) -> None:
         super().__init__(image)
         self.__waterplan = waterplan
+        if len(self.__waterplan) > 0:
+            self.__current_watering = self.__waterplan[0]
+            self.__current_channel = self.__current_watering.channel
+        else:
+            self.__current_watering = None
+            self.__current_channel = -1
+
 
     def draw_tabs(self, active_tab):
         self.masked_icon(
@@ -84,13 +93,18 @@ class PlantOverview(View):
                        3 else COLOR_TEXT_INACTIVE, self.font_small)
 
     def render(self):
-        watering = self.__waterplan[0]
-        sensor = watering.moistureSensor
-        next_water = watering.nextWater.strftime('%H:%M')
 
         self.clear()
         self.icon(icon_left_chev_right, (0, 2))
-        self.draw_tabs(self.__current_tab)
+        self.draw_tabs(self.__current_channel)
+
+        if self.__current_watering == None:
+            self.draw.text((DISPLAY_WIDTH/2, 16), "Not used", COLOR_YELLOW, self.font, anchor="mt")
+            return
+
+        watering = self.__waterplan[0]
+        sensor = watering.moistureSensor
+        next_water = watering.nextWater.strftime('%H:%M')
 
         self.draw.text((65, 16), "Basil", COLOR_WHITE, self.font)
 
@@ -107,7 +121,14 @@ class PlantOverview(View):
             sensor.avgSaturation), COLOR_WHITE, self.font)
 
     def button_a(self):
-        self.__current_tab += 1
+        self.__current_channel += 1
 
-        if self.__current_tab > 3:
-            self.__current_tab = 1
+        if self.__current_channel > 3:
+            self.__current_channel = 1
+
+        plans = list(filter(lambda x: x.channel == self.__current_channel, self.__waterplan))
+        if len(plans) > 0:
+            self.__current_watering = plans[0]
+        else:
+            self.__current_watering = None
+

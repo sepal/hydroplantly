@@ -49,3 +49,15 @@ class Watering:
     @property
     def moistureSensor(self) -> MoistureSensor:
         return self.__moisture_sensor
+
+    @property
+    def plantName(self) -> str:
+        return self.__plant.name
+
+    @property
+    def channel(self) -> int:
+        return self.__settings.pump_channel
+
+    @property
+    def autoWater(self) -> bool:
+        return self.__settings.auto_water
