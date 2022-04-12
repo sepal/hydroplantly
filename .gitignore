@@ -4,6 +4,9 @@
 # Ignore settings files
 settings.json
 
+# Ignore timelapse photos
+shot_*.jpg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

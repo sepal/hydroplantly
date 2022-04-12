@@ -6,11 +6,12 @@ import time
 import signal
 import sys
 from typing import List
+from camera_monitor import Camera
 from interface import Display
 from views import PlantOverview
 from watering import Watering
 from time_interval import TimeInterval
-from model import Plant
+from model import CameraSettings, Plant
 
 global app_timer
 
@@ -44,6 +45,12 @@ class App:
                 self.__plants.append(plant)
                 self.__waterplan.append(watering)
 
+            if "camera" in settings:
+                camera_settings = CameraSettings(**settings['camera'])
+            else:
+                camera_settings = CameraSettings()
+            self.__camera = Camera(camera_settings, self.__active_time)
+
         self.__display = Display()
         self.__display.setView(PlantOverview(self.__display.image, self.__waterplan))
 
@@ -53,6 +60,8 @@ class App:
             watering.update()
 
         self.__display.update()
+
+        self.__camera.update()
 
     @property
     def active(self):

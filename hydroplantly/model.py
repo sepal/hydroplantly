@@ -39,3 +39,10 @@ class WateringSettings(BaseModel):
 class Plant(BaseModel):
     name: str
     watering_settings: WateringSettings
+
+
+class CameraSettings(BaseModel):
+    cleanup_interval = timedelta(days=3)
+    interval = timedelta(hours=1)
+    local_path = "images"
+    s3_path = "images/hydroplantly"
