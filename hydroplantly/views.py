@@ -102,11 +102,10 @@ class PlantOverview(View):
             self.draw.text((DISPLAY_WIDTH/2, 16), "Not used", COLOR_YELLOW, self.font, anchor="mt")
             return
 
-        watering = self.__waterplan[0]
-        sensor = watering.moistureSensor
-        next_water = watering.nextWater.strftime('%H:%M')
+        sensor = self.__current_watering.moistureSensor
+        next_water = self.__current_watering.nextWater.strftime('%H:%M')
 
-        self.draw.text((65, 16), "Basil", COLOR_WHITE, self.font)
+        self.draw.text((DISPLAY_WIDTH/2, 16), self.__current_watering.plantName, COLOR_WHITE, self.font, anchor="mt")
 
         self.icon(icon_clock, (32, 40))
 
@@ -129,6 +128,7 @@ class PlantOverview(View):
         plans = list(filter(lambda x: x.channel == self.__current_channel, self.__waterplan))
         if len(plans) > 0:
             self.__current_watering = plans[0]
+            print(plans[0].plantName)
         else:
             self.__current_watering = None
 
