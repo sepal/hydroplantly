@@ -46,3 +46,4 @@ class CameraSettings(BaseModel):
     interval = timedelta(hours=1)
     local_path = "images"
     s3_path = "images/hydroplantly"
+    enabled = False

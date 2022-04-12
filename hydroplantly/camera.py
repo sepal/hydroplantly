@@ -12,7 +12,7 @@ from time_interval import TimeInterval
 class Camera:
 
     def __init__(self, settings: CameraSettings, active_time: TimeInterval) -> None:
-        self.__camera = PiCamera()
+        self.__enabled = settings.enabled
         self.__local_path = settings.local_path
         self.__s3_path = settings.s3_path
         self.__s3 = boto3.client('s3')
@@ -21,6 +21,14 @@ class Camera:
 
         self.__last_photo = datetime(1990, 1, 1)
         self.__active_time = active_time
+
+        if self.__enabled:
+            self.enable()
+
+    def enable(self):
+        self.__camera = PiCamera()
+        self.__enabled = True
+        
 
     def photo(self, ts = datetime.now()):
         try: 
@@ -52,7 +60,9 @@ class Camera:
 
     def update(self):
         now = datetime.now()
-        if  now - self.__last_photo > self.__interval and self.__active_time.isInDatetime(now):
+        if  now - self.__last_photo > self.__interval \
+            and self.__active_time.isInDatetime(now) \
+            and self.__enabled:
             self.photo(now)
             self.__last_photo = now
 

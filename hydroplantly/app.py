@@ -6,7 +6,7 @@ import time
 import signal
 import sys
 from typing import List
-from camera_monitor import Camera
+from camera import Camera
 from interface import Display
 from views import PlantOverview
 from watering import Watering
