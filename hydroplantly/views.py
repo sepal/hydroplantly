@@ -128,7 +128,6 @@ class PlantOverview(View):
         plans = list(filter(lambda x: x.channel == self.__current_channel, self.__waterplan))
         if len(plans) > 0:
             self.__current_watering = plans[0]
-            print(plans[0].plantName)
         else:
             self.__current_watering = None
 

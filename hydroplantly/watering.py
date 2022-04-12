@@ -36,7 +36,8 @@ class Watering:
                 f"Average saturation: {self.__moisture_sensor.avgSaturation}")
 
         if self.__settings.auto_water \
-                and ts - self.__last_watered > self.__settings.water_interval:
+                and ts - self.__last_watered > self.__settings.water_interval \
+                and self.__active_time.isInDatetime(ts):
             logging.info(f"Enabling pump on channel {self.__pump.channel}")
             self.__pump.water()
             self.__last_watered = ts

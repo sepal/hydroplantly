@@ -48,10 +48,6 @@ class App:
         self.__display.setView(PlantOverview(self.__display.image, self.__waterplan))
 
     def update(self) -> None:
-        if not self.active:
-            logging.info("Sleeping")
-            return
-
         logging.info("Watering update")
         for watering in self.__waterplan:
             watering.update()
