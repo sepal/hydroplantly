@@ -1,7 +1,7 @@
 from typing import List
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoMedium as UserFont
-from plant.watering import Watering
+from watering import Watering
 from helpers import COLOR_RED, DISPLAY_WIDTH, \
     DISPLAY_HEIGHT, \
     icon_left_chev_right, \

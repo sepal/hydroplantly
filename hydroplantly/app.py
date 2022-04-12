@@ -8,9 +8,9 @@ import sys
 from typing import List
 from interface import Display
 from views import PlantOverview
-from plant.watering import Watering
+from watering import Watering
 from time_interval import TimeInterval
-from plant import Plant
+from model import Plant
 
 global app_timer
 

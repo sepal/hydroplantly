@@ -1,7 +1,7 @@
 import logging
 from grow.pump import Pump
 
-from plant.model import PumpSettings, WateringSettings
+from model import PumpSettings, WateringSettings
 import time
 
 

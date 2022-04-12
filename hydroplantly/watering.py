@@ -1,8 +1,8 @@
 import logging
 from datetime import datetime, timedelta
-from plant.model import Plant, WateringSettings
-from plant.moisture import MoistureSensor
-from plant.pump import PumpControl
+from model import Plant, WateringSettings
+from moisture import MoistureSensor
+from pump import PumpControl
 
 
 class Watering:

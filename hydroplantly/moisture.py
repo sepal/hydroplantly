@@ -1,7 +1,7 @@
 from typing import Dict, List
 from grow.moisture import Moisture
 
-from plant.model import MoistureSettings
+from model import MoistureSettings
 
 NUM_SAMPLES = 10
 
