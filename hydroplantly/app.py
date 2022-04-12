@@ -33,15 +33,16 @@ class App:
         self.__plants = []
         with open(settings_file) as file:
             settings = json.load(file)
-            for plant_settings in settings['plants']:
-                plant = Plant(**plant_settings)
-                watering = Watering(plant)
-                self.__plants.append(plant)
-                self.__waterplan.append(watering)
                 
             active_settings = settings['general']['active_time']
             self.__active_time = TimeInterval.from_time(
                 active_settings['from'], active_settings['to'])
+
+            for plant_settings in settings['plants']:
+                plant = Plant(**plant_settings)
+                watering = Watering(plant, self.__active_time)
+                self.__plants.append(plant)
+                self.__waterplan.append(watering)
 
         self.__display = Display()
         self.__display.setView(PlantOverview(self.__display.image, self.__waterplan))

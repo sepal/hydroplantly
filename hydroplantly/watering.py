@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from time_interval import TimeInterval
 from model import Plant, WateringSettings
 from moisture import MoistureSensor
 from pump import PumpControl
@@ -11,8 +12,9 @@ class Watering:
     __pump: PumpControl
     __moisture_sensor: MoistureSensor
     __last_watered: datetime
+    __active_time: TimeInterval
 
-    def __init__(self, plant: Plant) -> None:
+    def __init__(self, plant: Plant, active_time: TimeInterval) -> None:
         self.__plant = plant
         self.__settings = plant.watering_settings
 
@@ -21,6 +23,7 @@ class Watering:
         self.__moisture_sensor = MoistureSensor(
             self.__plant.watering_settings.moisture_setting)
         self.__last_watered = datetime(1992, 1, 1)
+        self.__active_time = active_time
 
     def update(self) -> None:
         ts = datetime.now()
@@ -44,7 +47,11 @@ class Watering:
 
     @property
     def nextWater(self) -> datetime:
-        return self.__last_watered + self.__settings.water_interval
+        next_watering = self.__last_watered + self.__settings.water_interval
+        if not self.__active_time.isInDatetime(next_watering):
+            next_watering = self.__active_time.dtStart
+
+        return next_watering
 
     @property
     def moistureSensor(self) -> MoistureSensor:

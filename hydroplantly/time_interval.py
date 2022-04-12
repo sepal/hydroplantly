@@ -75,3 +75,11 @@ class TimeInterval:
     @property
     def end(self) -> Tuple[int, int]:
         return self.__end
+
+    @property
+    def dtStart(self, now=datetime.now()) -> datetime:
+        dt_start = now.replace(hour=self.start[0], minute=self.start[1])
+        if dt_start < now:
+            dt_start += timedelta(days=1)
+
+        return dt_start
