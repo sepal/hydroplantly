@@ -43,5 +43,9 @@ class Watering:
         return self.__last_watered
 
     @property
+    def nextWater(self) -> datetime:
+        return self.__last_watered + self.__settings.water_interval
+
+    @property
     def moistureSensor(self) -> MoistureSensor:
         return self.__moisture_sensor

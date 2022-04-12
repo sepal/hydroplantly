@@ -6,6 +6,8 @@ import time
 import signal
 import sys
 from typing import List
+from interface import Display
+from views import PlantOverview
 from plant.watering import Watering
 from time_interval import TimeInterval
 from plant import Plant
@@ -41,6 +43,9 @@ class App:
             self.__active_time = TimeInterval.from_time(
                 active_settings['from'], active_settings['to'])
 
+        self.__display = Display()
+        self.__display.setView(PlantOverview(self.__display.image, self.__waterplan))
+
     def update(self) -> None:
         if not self.active:
             logging.info("Sleeping")
@@ -49,6 +54,8 @@ class App:
         logging.info("Watering update")
         for watering in self.__waterplan:
             watering.update()
+
+        self.__display.update()
 
     @property
     def active(self):

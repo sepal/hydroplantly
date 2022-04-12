@@ -18,6 +18,8 @@ class MoistureSensor:
         self.__sensor = Moisture(
             settings.channel, settings.wet_point, settings.dry_point)
         self.__saturation = [1.0 for _ in range(NUM_SAMPLES)]
+        self.__last_reading = 0.0
+        self.__avg_saturation = 0.0
 
     @property
     def active(self) -> bool:
